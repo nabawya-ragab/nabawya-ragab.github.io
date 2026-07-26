@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  /* -------------------- شريط البحث المتحرك (Typing Effect) -------------------- */
+  /* -------------------- النص الثابت (بدون typing effect) -------------------- */
   const phrases = [
     'بكتب سكريبت ريل لعيادة نسائية متكاملة…',
     'بصمم كابشن يبيع مجوهرات من غير ما يصرخ…',
@@ -47,36 +47,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (briefText) {
     const cursor = briefText.querySelector('.cursor');
-    let pIndex = 0, charIndex = 0, deleting = false;
-
-    const type = () => {
-      const current = phrases[pIndex];
-      if (!deleting) {
-        charIndex++;
-        if (charIndex > current.length) {
-          deleting = true;
-          setTimeout(type, 1400);
-          return;
-        }
-      } else {
-        charIndex--;
-        if (charIndex < 0) {
-          deleting = false;
-          pIndex = (pIndex + 1) % phrases.length;
-          charIndex = 0;
-        }
-      }
-      briefText.textContent = current.slice(0, charIndex);
-      briefText.appendChild(cursor);
-      setTimeout(type, deleting ? 28 : 55);
-    };
-
-    if (prefersReduced) {
-      briefText.textContent = phrases[0];
-      briefText.appendChild(cursor);
-    } else {
-      type();
-    }
+    briefText.textContent = phrases[0];
+    briefText.appendChild(cursor);
   }
 
   /* -------------------- Reveal on Scroll -------------------- */
@@ -139,7 +111,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  /* حفظ نص الزر الأصلي لإعادة استخدامه عند القفل */
   document.querySelectorAll('.script-toggle').forEach(btn => {
     const originalText = btn.childNodes[0].textContent.trim();
     btn.dataset.label = originalText;
